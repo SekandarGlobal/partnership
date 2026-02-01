@@ -30,6 +30,20 @@ body {
 }
 h2 { font-size:1.8rem; margin-bottom:15px; font-weight:bold; }
 p.description { font-size:1rem; line-height:1.6; margin-bottom:25px; color:#ddd; }
+
+input, textarea {
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  border-radius:12px;
+  border:1px solid #fff;
+  background:#000;
+  color:#fff;
+  font-size:0.95rem;
+  transition: all 0.2s ease;
+}
+input::placeholder, textarea::placeholder { color:#ccc; }
+
 .option {
   border:2px solid #fff;
   border-radius:12px;
@@ -41,24 +55,16 @@ p.description { font-size:1rem; line-height:1.6; margin-bottom:25px; color:#ddd;
 }
 .option:hover { transform:scale(1.03); background:#fff; color:#000; }
 .option.selected { background:#fff; color:#000; }
-button:focus, .option:focus, textarea:focus { outline:none !important; box-shadow:none !important; }
-button, .option, textarea { -webkit-tap-highlight-color: transparent !important; user-select:none; }
+
 .reason-container { margin-top:15px; text-align:left; display:none; }
-textarea {
-  width:100%; padding:12px; margin-top:8px;
-  border-radius:12px; border:1px solid #fff;
-  background:#000; color:#fff; font-size:0.95rem; resize:vertical;
-  transition: all 0.2s ease;
-}
-textarea::placeholder { color:#ccc; }
 .suggestions { margin-top:8px; display:flex; flex-wrap:wrap; gap:8px; }
 .suggestion { background:#fff; color:#000; padding:6px 10px; border-radius:12px; font-size:0.85rem; cursor:pointer; transition: all 0.2s ease; }
 .suggestion:hover { transform:scale(1.05); background:#ccc; }
+
 button { margin-top:25px; width:100%; padding:15px; border:none; border-radius:12px; background:#fff; color:#000; font-size:16px; font-weight:bold; cursor:pointer; transition: all 0.2s ease; }
 button:hover:not(.disabled) { transform:scale(1.02); background:#ccc; }
 button.disabled { opacity:0.5; pointer-events:none; }
 
-/* Thank You Page */
 .thank-you-container {
   display:none;
   width:90%;
@@ -68,8 +74,8 @@ button.disabled { opacity:0.5; pointer-events:none; }
 }
 .thank-you-container h2 { color:#fff; font-size:1.8rem; margin-bottom:15px; }
 #dynamic-content { margin-top:20px; font-size:1rem; color:#fff; line-height:1.5; text-align:left; }
-@keyframes fadeIn { 0%{opacity:0} 100%{opacity:1} }
 
+@keyframes fadeIn { 0%{opacity:0} 100%{opacity:1} }
 @media (max-width:400px) { h2{ font-size:1.5rem;} p.description{ font-size:0.95rem; } }
 </style>
 </head>
@@ -84,6 +90,9 @@ I want to invite you to partner with me. You don’t need to invest any money, j
 We will share the profits from the projects as we grow the users and apps.  
 Please let me know if you want to join.
 </p>
+
+<!-- Name Input -->
+<input type="text" id="user-name" placeholder="Enter your name" />
 
 <div id="yes" class="option">YES, I want to join</div>
 <div id="no" class="option">NO, I am not interested</div>
@@ -162,6 +171,10 @@ document.querySelectorAll(".suggestion").forEach(el=>{
 
 document.getElementById("submit").onclick = async ()=>{
   if(localStorage.getItem("submitted")) return;
+
+  const userName = document.getElementById("user-name").value.trim();
+  if(!userName){ alert("Please enter your name."); return; }
+
   if(!selected){ alert("Select Yes or No"); return; }
 
   let reasonText = document.getElementById("reason").value.trim();
@@ -172,6 +185,7 @@ document.getElementById("submit").onclick = async ()=>{
 
   try{
     await addDoc(collection(db,"responses"),{
+      name: userName,
       answer: selected,
       reason: reasonChosen||"",
       timestamp: Date.now(),
