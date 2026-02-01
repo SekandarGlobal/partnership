@@ -3,192 +3,363 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hire Form & Partnership</title>
+<title>Strategic Partnership & Careers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing:border-box; margin:0; padding:0; }
-body {
-  font-family:'Arial', sans-serif;
-  background:#000;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  min-height:100vh;
-  padding:20px;
-}
-.container {
-  background:#111;
-  padding:30px;
-  border-radius:20px;
-  width:100%;
-  max-width:600px;
-  box-shadow:0 10px 25px rgba(255,255,255,0.1);
-}
-h2 { font-size:1.8rem; margin-bottom:20px; text-align:center; }
-p.description { color:#ccc; font-size:1rem; line-height:1.6; margin-bottom:20px; text-align:center; }
-input, select, textarea {
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:12px;
-  border:1px solid #fff;
-  background:#000;
-  color:#fff;
-  font-size:0.95rem;
-}
-input::placeholder, textarea::placeholder, select { color:#ccc; }
-textarea { resize:vertical; }
-button {
-  margin-top:20px;
-  width:100%;
-  padding:15px;
-  border:none;
-  border-radius:12px;
-  background:#fff;
-  color:#000;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  transition: all 0.2s ease;
-}
-button:hover{ background:#ccc; transform:scale(1.02);}
-.checkbox-container { margin-top:15px; display:flex; align-items:center; }
-.checkbox-container input { margin-right:10px; }
-#thank-you { display:none; margin-top:20px; }
-.submissions { margin-top:15px; border-top:1px solid #fff; padding-top:10px; }
-.submissions p { font-size:0.9rem; color:#ccc; line-height:1.4; }
-.other-input { display:none; margin-top:10px; }
+    :root {
+        --bg: #000000;
+        --surface: #0a0a0a;
+        --border: #333333;
+        --text-main: #ffffff;
+        --text-muted: #888888;
+        --focus: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center; 
+        align-items: center;     
+        padding: 20px;
+    }
+
+    .container {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        width: 100%;
+        max-width: 500px; /* Slimmer for a modern, centered aesthetic */
+        padding: 40px 30px;
+        text-align: center; 
+        animation: fadeIn 1s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes fadeIn { 
+        from { opacity: 0; transform: translateY(20px); } 
+        to { opacity: 1; transform: translateY(0); } 
+    }
+
+    header { margin-bottom: 40px; }
+    h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -1px; margin-bottom: 12px; }
+    .subtitle { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; }
+
+    .section-title {
+        margin: 35px 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+    }
+
+    /* CENTERED INPUT GROUPS */
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centers the label and input internally */
+        margin-bottom: 20px;
+        width: 100%;
+    }
+    
+    label {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    input, select {
+        width: 100%; /* Spans full width of the container */
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        padding: 12px;
+        font-size: 0.9rem;
+        font-family: 'Inter', sans-serif;
+        border-radius: 0;
+        text-align: center; /* Centers text inside the input */
+        transition: all 0.3s ease;
+    }
+
+    /* Fix for select text centering in some browsers */
+    select { text-align-last: center; padding-right: 30px; }
+
+    input:focus, select:focus { 
+        border-color: var(--focus); 
+        background: #111; 
+    }
+
+    /* Custom Selection Styling */
+    .select-wrapper { width: 100%; position: relative; }
+
+    .terms-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 20px;
+        margin-top: 30px;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    .checkbox-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 30px;
+        padding: 16px;
+        background: var(--text-main);
+        color: var(--bg);
+        border: 1px solid var(--text-main);
+        font-size: 0.85rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover { 
+        background: transparent; 
+        color: var(--text-main); 
+    }
+
+    /* Results Center */
+    #thank-you { display: none; text-align: center; animation: fadeIn 1s forwards; }
+    .stats-counter { font-size: 4rem; font-weight: 600; margin: 10px 0; }
+    .submission-list { margin-top: 40px; }
+    .submission-item { 
+        padding: 12px 0; 
+        border-bottom: 1px solid var(--border); 
+        display: flex; 
+        flex-direction: column; /* Stacked for mobile */
+        gap: 5px;
+        font-size: 0.8rem; 
+    }
+    .badge { 
+        align-self: center;
+        font-size: 0.6rem; 
+        padding: 2px 10px; 
+        border: 1px solid var(--border); 
+        text-transform: uppercase; 
+    }
+
+    /* Mobile Fine-tuning */
+    @media(max-width: 480px) {
+        .container { padding: 30px 20px; border: none; }
+        h1 { font-size: 1.4rem; }
+    }
 </style>
 </head>
-
 <body>
 
 <div class="container" id="form-container">
-<h2>Apply / Become a Partner</h2>
-<p class="description">
-Fill this form to join us. You can work or become a partner.
-</p>
+    <header>
+        <h1>Strategic Application</h1>
+        <p class="subtitle">Join our network of elite contributors. Please complete the verification protocol below.</p>
+    </header>
 
-<!-- Personal Info -->
-<h3>Personal Info</h3>
-<input type="text" id="name" placeholder="First Name" required>
-<input type="text" id="lastname" placeholder="Last Name" required>
-<input type="text" id="fathername" placeholder="Father Name">
-<input type="text" id="country" placeholder="Country">
-<input type="text" id="city" placeholder="City">
-<input type="text" id="fulladdress" placeholder="Full Address">
-<input type="email" id="email" placeholder="Email" required>
-<input type="tel" id="phone" placeholder="Phone Number">
-<input type="text" id="telegram" placeholder="Telegram Username">
+    <div class="section-title">Identity</div>
+    
+    <div class="input-group">
+        <label>First Name</label>
+        <input type="text" id="name" required>
+    </div>
+    <div class="input-group">
+        <label>Last Name</label>
+        <input type="text" id="lastname" required>
+    </div>
+    <div class="input-group">
+        <label>Father's Name</label>
+        <input type="text" id="fathername">
+    </div>
+    <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" id="email" required>
+    </div>
+    <div class="input-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone">
+    </div>
+    <div class="input-group">
+        <label>Telegram Handle</label>
+        <input type="text" id="telegram" placeholder="@username">
+    </div>
 
-<!-- Work Info -->
-<h3>Work Info</h3>
-<select id="work">
-  <option value="">Select work you can do</option>
-  <option value="manage finance">Manage Finance</option>
-  <option value="manage backend">Manage Backend</option>
-  <option value="manage telegram">Manage Telegram</option>
-  <option value="help building app">Help in Building App</option>
-  <option value="improving app">Improving App</option>
-  <option value="other">Other</option>
-</select>
+    <div class="section-title">Location</div>
+    
+    <div class="input-group">
+        <label>Country</label>
+        <input type="text" id="country">
+    </div>
+    <div class="input-group">
+        <label>City</label>
+        <input type="text" id="city">
+    </div>
+    <div class="input-group">
+        <label>Full Address</label>
+        <input type="text" id="fulladdress">
+    </div>
 
-<!-- Other custom input -->
-<input type="text" id="workother" class="other-input" placeholder="Specify other work">
+    <div class="section-title">Specifications</div>
 
-<!-- Partner Option -->
-<h3>Become a Partner</h3>
-<select id="partner">
-  <option value="">Do you want to become a partner?</option>
-  <option value="yes">Yes, I want to become a partner</option>
-  <option value="no">No</option>
-</select>
+    <div class="input-group">
+        <label>Area of Expertise</label>
+        <select id="work">
+            <option value="" disabled selected>Select competency</option>
+            <option value="Finance Strategy">Financial Strategy</option>
+            <option value="Backend Architecture">Backend Architecture</option>
+            <option value="Community Management">Community Management</option>
+            <option value="App Development">App Development</option>
+            <option value="App Optimization">App Optimization</option>
+            <option value="other">Other / Specialized</option>
+        </select>
+    </div>
 
-<!-- Terms -->
-<div class="checkbox-container">
-  <input type="checkbox" id="agree" required>
-  <label for="agree">I agree with <a href="terms.html" target="_blank" style="color:#fff;text-decoration:underline;">Terms & Conditions</a> and <a href="privacy.html" target="_blank" style="color:#fff;text-decoration:underline;">Privacy Policy</a> and understand how my data will be used.</label>
+    <div class="input-group" id="other-input-container" style="display:none;">
+        <label>Specify Skill</label>
+        <input type="text" id="workother">
+    </div>
+
+    <div class="input-group">
+        <label>Salary Preference</label>
+        <select id="salary">
+            <option value="" disabled selected>Select preference</option>
+            <option value="No Salary">I don't want salary</option>
+            <option value="50 USD">50$ / Day</option>
+            <option value="100 USD">100$ / Day</option>
+            <option value="130 USD">130$ / Day</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label>Partnership Interest</label>
+        <select id="partner">
+            <option value="" disabled selected>Seeking partnership?</option>
+            <option value="yes">Initiate Partnership</option>
+            <option value="no">Employment Only</option>
+        </select>
+    </div>
+
+    <div class="terms-box">
+        <strong>LEGAL DISCLOSURE:</strong> Private data is transmitted to a private Firestore vault. Minimal data (Name/Role) is synchronized to the Realtime database for verification purposes.
+    </div>
+
+    <div class="checkbox-container">
+        <input type="checkbox" id="agree">
+        <label for="agree" style="margin:0; cursor:pointer;">I accept the protocol.</label>
+    </div>
+
+    <button id="submit">Confirm Submission</button>
 </div>
 
-<button id="submit">Submit</button>
-</div>
-
-<!-- Thank you page -->
 <div class="container" id="thank-you">
-<h2>Thank you for your submission! 🎉</h2>
-<p>Here are all the users who submitted:</p>
-<div class="submissions" id="submissions"></div>
+    <header>
+        <h1>Success</h1>
+        <p class="subtitle">Your application has been logged in the secure database.</p>
+    </header>
+    
+    <div class="stats-counter" id="total-count">0</div>
+    <p style="text-transform:uppercase; letter-spacing:2px; font-size:0.6rem; color:var(--text-muted);">Verified Applicants</p>
+    
+    <div class="submission-list" id="submissions"></div>
 </div>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCyvLrY_q11W2ZkTzSAgX016iP0uBEg4OU",
   authDomain: "shameer-f52f7.firebaseapp.com",
+  databaseURL: "https://shameer-f52f7-default-rtdb.firebaseio.com",
   projectId: "shameer-f52f7",
-  storageBucket: "shameer-f52f7.firebasestorage.app",
+  storageBucket: "shameer-f52f7.appspot.com",
   messagingSenderId: "730512262010",
-  appId: "1:730512262010:web:635a7ada85d715ddb1ccc3",
-  measurementId: "G-7LTSB7W4J9"
+  appId: "1:730512262010:web:635a7ada85d715ddb1ccc3"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const rtdb = getDatabase(app);
+const firestore = getFirestore(app);
 
-// Show/hide other work input
-const workSelect = document.getElementById("work");
-const otherInput = document.getElementById("workother");
-workSelect.addEventListener("change", ()=>{
-  if(workSelect.value==="other") otherInput.style.display="block";
-  else otherInput.style.display="none";
-});
+document.getElementById("work").onchange = (e) => {
+    document.getElementById("other-input-container").style.display = e.target.value === "other" ? "flex" : "none";
+};
 
-// Submit
-document.getElementById("submit").onclick = async ()=>{
-  // Validation
-  const name = document.getElementById("name").value.trim();
-  const lastname = document.getElementById("lastname").value.trim();
-  const fathername = document.getElementById("fathername").value.trim();
-  const country = document.getElementById("country").value.trim();
-  const city = document.getElementById("city").value.trim();
-  const fulladdress = document.getElementById("fulladdress").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const telegram = document.getElementById("telegram").value.trim();
-  let work = workSelect.value;
-  if(work==="other") work = otherInput.value.trim();
-  const partner = document.getElementById("partner").value;
-  const agree = document.getElementById("agree").checked;
+document.getElementById("submit").onclick = async () => {
+    const btn = document.getElementById("submit");
+    const data = {
+        name: document.getElementById("name").value.trim(),
+        lastname: document.getElementById("lastname").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        salary: document.getElementById("salary").value,
+        work: document.getElementById("work").value === "other" ? document.getElementById("workother").value : document.getElementById("work").value,
+        partner: document.getElementById("partner").value,
+        agree: document.getElementById("agree").checked
+    };
 
-  if(!name || !lastname || !email || !agree){
-    alert("Please fill required fields and agree to the terms.");
-    return;
-  }
+    if(!data.name || !data.email || !data.salary || !data.agree) {
+        alert("Please complete required fields.");
+        return;
+    }
 
-  try{
-    await addDoc(collection(db,"hires"),{
-      name, lastname, fathername, country, city, fulladdress, email, phone, telegram, work, partner, timestamp:Date.now()
-    });
+    btn.innerText = "Processing...";
+    btn.disabled = true;
 
-    // Show thank you page
-    document.getElementById("form-container").style.display="none";
-    document.getElementById("thank-you").style.display="block";
+    try {
+        await addDoc(collection(firestore, "applicants_secure"), {...data, timestamp: Date.now()});
+        await push(ref(rtdb, "public_submissions"), { name: data.name, work: data.work, partner: data.partner });
 
-    // Fetch all submissions
-    const submissionsDiv = document.getElementById("submissions");
-    submissionsDiv.innerHTML = "";
-    const querySnapshot = await getDocs(collection(db,"hires"));
-    querySnapshot.forEach(doc=>{
-      const data = doc.data();
-      submissionsDiv.innerHTML += `<p><strong>${data.name} ${data.lastname}</strong> - ${data.work} - Partner: ${data.partner}</p>`;
-    });
-  } catch(e){ alert("Submission failed."); console.error(e);}
+        document.getElementById("form-container").style.display = "none";
+        document.getElementById("thank-you").style.display = "block";
+
+        onValue(ref(rtdb, "public_submissions"), (snap) => {
+            document.getElementById("total-count").innerText = snap.size;
+            let html = "";
+            let items = [];
+            snap.forEach(child => { items.push(child.val()); });
+            items.reverse().slice(0, 5).forEach(val => {
+                html += `<div class="submission-item">
+                            <span><strong>${val.name}</strong></span>
+                            <span>${val.work}</span>
+                            <span class="badge">${val.partner === 'yes' ? 'Partner' : 'Staff'}</span>
+                         </div>`;
+            });
+            document.getElementById("submissions").innerHTML = html;
+        });
+    } catch(e) { 
+        alert("Transmission error."); 
+        btn.innerText = "Confirm Submission";
+        btn.disabled = false;
+    }
 };
 </script>
-
 </body>
 </html>
