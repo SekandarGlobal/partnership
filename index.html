@@ -30,6 +30,7 @@
         padding: 20px;
     }
 
+    /* Initial state is hidden to prevent flickering during redirect check */
     .container {
         background: var(--bg);
         border: 1px solid var(--border);
@@ -37,14 +38,12 @@
         max-width: 500px;
         padding: 40px 20px;
         text-align: center;
-        animation: fadeIn 0.6s ease-out;
+        display: none; 
     }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     header { margin-bottom: 30px; }
     h1 { font-size: 1.4rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-    .subtitle { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 1px; }
+    .subtitle { color: var(--text-muted); font-size: 0.75rem; }
 
     .section-title {
         margin: 25px 0 15px 0;
@@ -63,12 +62,7 @@
         width: 100%;
     }
     
-    label {
-        font-size: 0.6rem;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        margin-bottom: 5px;
-    }
+    label { font-size: 0.6rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
 
     input, select {
         width: 100%;
@@ -78,25 +72,12 @@
         padding: 12px;
         font-size: 0.85rem;
         text-align: center;
-        transition: 0.3s;
-    }
-
-    input:focus { border-color: #fff; background: #111; }
-
-    .terms-box {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        padding: 15px;
-        margin-top: 20px;
-        font-size: 0.65rem;
-        color: var(--text-muted);
-        line-height: 1.4;
     }
 
     button {
         width: 100%;
         margin-top: 25px;
-        padding: 15px;
+        padding: 18px;
         background: #fff;
         color: #000;
         border: none;
@@ -107,17 +88,9 @@
         cursor: pointer;
     }
 
-    button:disabled { background: #333; color: #666; cursor: not-allowed; }
-
-    #thank-you { display: none; }
-    .counter { font-size: 3.5rem; font-weight: 600; margin: 10px 0; }
-    .log-item { 
-        padding: 10px 0; 
-        border-bottom: 1px solid var(--border); 
-        font-size: 0.75rem;
-        display: flex;
-        justify-content: space-between;
-    }
+    .counter { font-size: 4rem; font-weight: 600; margin: 15px 0; letter-spacing: -2px;}
+    .log-item { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;}
+    .badge { font-size: 10px; border: 1px solid #333; padding: 2px 6px; color: #888;}
 
     @media (max-width: 480px) {
         .container { border: none; padding: 20px 10px; }
@@ -129,23 +102,23 @@
 <div class="container" id="form-container">
     <header>
         <h1>System Entry</h1>
-        <p class="subtitle">Complete professional data verification</p>
+        <p class="subtitle">Enter credentials to initialize protocol</p>
     </header>
 
-    <div class="section-title">Personal Identity</div>
+    <div class="section-title">Identity</div>
     <div class="input-group"><label>First Name</label><input type="text" id="name" required></div>
     <div class="input-group"><label>Last Name</label><input type="text" id="lastname" required></div>
     <div class="input-group"><label>Father Name</label><input type="text" id="fathername"></div>
     <div class="input-group"><label>Email</label><input type="email" id="email" required></div>
-    <div class="input-group"><label>Phone Number</label><input type="tel" id="phone"></div>
-    <div class="input-group"><label>Telegram Username</label><input type="text" id="telegram" placeholder="@username"></div>
+    <div class="input-group"><label>Phone</label><input type="tel" id="phone" required></div>
+    <div class="input-group"><label>Telegram</label><input type="text" id="telegram" placeholder="@username"></div>
 
-    <div class="section-title">Geographics</div>
+    <div class="section-title">Location</div>
     <div class="input-group"><label>Country</label><input type="text" id="country"></div>
     <div class="input-group"><label>City</label><input type="text" id="city"></div>
     <div class="input-group"><label>Full Address</label><input type="text" id="fulladdress"></div>
 
-    <div class="section-title">Parameters</div>
+    <div class="section-title">Specifications</div>
     <div class="input-group">
         <label>Expertise</label>
         <select id="work">
@@ -162,9 +135,9 @@
     </div>
 
     <div class="input-group">
-        <label>Salary Expectation</label>
+        <label>Salary</label>
         <select id="salary">
-            <option value="" disabled selected>Select Salary</option>
+            <option value="" disabled selected>Select Preference</option>
             <option value="None">I don't want salary</option>
             <option value="50">50$/day</option>
             <option value="100">100/day</option>
@@ -181,18 +154,17 @@
         </select>
     </div>
 
-    <div class="terms-box">
-        All entries (including personal addresses and selectors) are transmitted to the secure Firestore ledger.
-    </div>
-
     <button id="submit">Initialize Submission</button>
 </div>
 
 <div class="container" id="thank-you">
     <h1>Acknowledged</h1>
+    <p class="subtitle" style="color: #444;">Verification complete. Data encrypted.</p>
     <div class="counter" id="total-count">0</div>
-    <p style="font-size: 0.6rem; color: #888; text-transform: uppercase;">Verified Entries</p>
-    <div id="submissions" style="margin-top:20px; text-align: left;"></div>
+    <p style="font-size: 0.6rem; color: #888; text-transform: uppercase; letter-spacing: 2px;">Global Entries Received</p>
+    
+    <div id="submissions" style="margin-top:30px; text-align: left;">
+        </div>
 </div>
 
 <script type="module">
@@ -214,6 +186,41 @@ const app = initializeApp(firebaseConfig);
 const rtdb = getDatabase(app);
 const firestore = getFirestore(app);
 
+const formDiv = document.getElementById("form-container");
+const successDiv = document.getElementById("thank-you");
+
+// --- REDIRECT LOGIC ---
+// This runs as soon as the scripts load
+function checkProtocol() {
+    const isSubmitted = localStorage.getItem("protocol_submitted");
+    if (isSubmitted === "true") {
+        formDiv.style.display = "none";
+        successDiv.style.display = "block";
+        loadRealtimeStats();
+    } else {
+        formDiv.style.display = "block";
+    }
+}
+
+function loadRealtimeStats() {
+    onValue(ref(rtdb, "public_log"), (snap) => {
+        document.getElementById("total-count").innerText = snap.size || 0;
+        let html = "";
+        let entries = [];
+        snap.forEach(child => entries.push(child.val()));
+        entries.reverse().slice(0, 5).forEach(data => {
+            html += `<div class="log-item">
+                        <span><strong>${data.name}</strong></span>
+                        <span class="badge">${data.work}</span>
+                    </div>`;
+        });
+        document.getElementById("submissions").innerHTML = html;
+    });
+}
+
+// Check on load
+checkProtocol();
+
 document.getElementById("work").onchange = (e) => {
     document.getElementById("other-input-container").style.display = e.target.value === "other" ? "flex" : "none";
 };
@@ -221,56 +228,48 @@ document.getElementById("work").onchange = (e) => {
 document.getElementById("submit").onclick = async () => {
     const btn = document.getElementById("submit");
     
-    // CAPTURING EVERY SINGLE USER ACTION/ANSWER
-    const fullData = {
-        firstName: document.getElementById("name").value,
-        lastName: document.getElementById("lastname").value,
-        fatherName: document.getElementById("fathername").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        telegram: document.getElementById("telegram").value,
-        country: document.getElementById("country").value,
-        city: document.getElementById("city").value,
-        address: document.getElementById("fulladdress").value,
-        salaryChoice: document.getElementById("salary").value,
-        partnershipChoice: document.getElementById("partner").value,
+    const payload = {
+        name: document.getElementById("name").value.trim(),
+        lastname: document.getElementById("lastname").value.trim(),
+        fatherName: document.getElementById("fathername").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        telegram: document.getElementById("telegram").value.trim(),
+        country: document.getElementById("country").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        address: document.getElementById("fulladdress").value.trim(),
+        salary: document.getElementById("salary").value,
         expertise: document.getElementById("work").value === "other" ? document.getElementById("workother").value : document.getElementById("work").value,
-        timestamp: new Date().toLocaleString()
+        partnership: document.getElementById("partner").value,
+        timestamp: new Date().toISOString()
     };
 
-    if(!fullData.firstName || !fullData.email || !fullData.salaryChoice) {
-        alert("Incomplete data.");
+    if(!payload.name || !payload.email || !payload.salary) {
+        alert("Verification Incomplete.");
         return;
     }
 
-    btn.innerText = "Transmitting...";
     btn.disabled = true;
+    btn.innerText = "TRANSMITTING...";
 
     try {
-        // 1. SAVE EVERYTHING TO FIRESTORE
-        await addDoc(collection(firestore, "submissions_full"), fullData);
+        // 1. Full data to Firestore
+        await addDoc(collection(firestore, "submissions_full"), payload);
         
-        // 2. LOG TO REALTIME DATABASE
-        await push(ref(rtdb, "public_log"), { name: fullData.firstName, work: fullData.expertise });
+        // 2. Limited data to Realtime DB
+        await push(ref(rtdb, "public_log"), { name: payload.name, work: payload.expertise });
 
-        document.getElementById("form-container").style.display = "none";
-        document.getElementById("thank-you").style.display = "block";
+        // 3. Set the LOCK in LocalStorage
+        localStorage.setItem("protocol_submitted", "true");
 
-        onValue(ref(rtdb, "public_log"), (snap) => {
-            document.getElementById("total-count").innerText = snap.size;
-            let html = "";
-            snap.forEach(c => {
-                const v = c.val();
-                html = `<div class="log-item"><span>${v.name}</span><span style="color:#666">${v.work}</span></div>` + html;
-            });
-            document.getElementById("submissions").innerHTML = html;
-        });
+        // 4. Update the UI
+        checkProtocol();
 
     } catch(err) {
         console.error(err);
-        alert("Connection Error. Ensure Firebase Rules are updated.");
-        btn.innerText = "Initialize Submission";
+        alert("System Error. Check Firebase Configuration.");
         btn.disabled = false;
+        btn.innerText = "Initialize Submission";
     }
 };
 </script>
