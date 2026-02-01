@@ -58,30 +58,19 @@ button { margin-top:25px; width:100%; padding:15px; border:none; border-radius:1
 button:hover:not(.disabled) { transform:scale(1.02); background:#ccc; }
 button.disabled { opacity:0.5; pointer-events:none; }
 
-/* Modern Thank You Page (Black & White) */
+/* Thank You Page */
 .thank-you-container {
   display:none;
-  background:#111;
-  border-radius:20px;
-  padding:30px 25px;
-  max-width:500px;
   width:90%;
+  max-width:500px;
   text-align:center;
-  box-shadow:0 10px 30px rgba(255,255,255,0.15);
-  animation: fadeInScale 0.5s forwards;
+  animation: fadeIn 0.5s forwards;
 }
-.thank-you-container h2 { color:#fff; margin-bottom:15px; }
-.thank-you-container p { color:#ccc; font-size:1rem; line-height:1.5; }
-#dynamic-content { margin-top:15px; font-size:1rem; color:#fff; line-height:1.5; }
+.thank-you-container h2 { color:#fff; font-size:1.8rem; margin-bottom:15px; }
+#dynamic-content { margin-top:20px; font-size:1rem; color:#fff; line-height:1.5; text-align:left; }
+@keyframes fadeIn { 0%{opacity:0} 100%{opacity:1} }
 
-@keyframes fadeInScale {
-  0% { opacity:0; transform:scale(0.9); }
-  100% { opacity:1; transform:scale(1); }
-}
-
-@media (max-width:400px) {
-  h2{ font-size:1.5rem;} p.description{ font-size:0.95rem; }
-}
+@media (max-width:400px) { h2{ font-size:1.5rem;} p.description{ font-size:0.95rem; } }
 </style>
 </head>
 
@@ -115,7 +104,7 @@ Please let me know if you want to join.
 
 <div class="thank-you-container" id="thank-you">
 <h2>Thank you for your response! 🎉</h2>
-<p id="dynamic-content">Loading content...</p>
+<div id="dynamic-content">Loading content...</div>
 </div>
 
 <!-- Firebase -->
@@ -140,11 +129,10 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-// Form logic
 let selected = null;
 let reasonChosen = null;
 
-if (localStorage.getItem("submitted")) {
+if(localStorage.getItem("submitted")){
   reasonChosen = localStorage.getItem("reasonChosen");
   showThankYou(reasonChosen);
 }
@@ -156,7 +144,6 @@ function select(val){
   selected = val;
   document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
   document.getElementById(val.toLowerCase()).classList.add("selected");
-
   if(val==="NO"){
     document.getElementById("reason-container").style.display="block";
   } else {
@@ -173,7 +160,7 @@ document.querySelectorAll(".suggestion").forEach(el=>{
   };
 });
 
-document.getElementById("submit").onclick = async () => {
+document.getElementById("submit").onclick = async ()=>{
   if(localStorage.getItem("submitted")) return;
   if(!selected){ alert("Select Yes or No"); return; }
 
@@ -183,11 +170,10 @@ document.getElementById("submit").onclick = async () => {
     reasonChosen = reasonText;
   }
 
-  try {
-    // Write response to Firestore
-    await addDoc(collection(db, "responses"), {
+  try{
+    await addDoc(collection(db,"responses"),{
       answer: selected,
-      reason: reasonChosen || "",
+      reason: reasonChosen||"",
       timestamp: Date.now(),
       device: navigator.userAgent
     });
@@ -196,10 +182,7 @@ document.getElementById("submit").onclick = async () => {
     if(reasonChosen) localStorage.setItem("reasonChosen",reasonChosen);
 
     showThankYou(reasonChosen);
-  } catch(e){
-    alert("Submit failed. Check console.");
-    console.error(e);
-  }
+  }catch(e){ alert("Submit failed."); console.error(e);}
 };
 
 async function showThankYou(reason){
@@ -209,20 +192,20 @@ async function showThankYou(reason){
 
   const dynamicContent = document.getElementById("dynamic-content");
 
-  if(!reason) { dynamicContent.innerText=""; return; }
+  if(!reason){ dynamicContent.innerText=""; return; }
 
   if(reason.toLowerCase().includes("need more information")){
     try{
       const docRef = doc(db,"info","latest");
       const docSnap = await getDoc(docRef);
       dynamicContent.innerText = docSnap.exists()? docSnap.data().content : "You will receive more information on this page. Stay tuned!";
-    }catch(err){ dynamicContent.innerText="You will receive more information on this page. Stay tuned!"; }
+    }catch(err){ dynamicContent.innerText="You will receive more information on this page. Stay tuned!";}
   } else if(reason.toLowerCase().includes("other opportunities")){
     try{
       const docRef = doc(db,"opportunities","latest");
       const docSnap = await getDoc(docRef);
       dynamicContent.innerText = docSnap.exists()? docSnap.data().content : "You will see other opportunities on this page.";
-    }catch(err){ dynamicContent.innerText="You will see other opportunities on this page."; }
+    }catch(err){ dynamicContent.innerText="You will see other opportunities on this page.";}
   } else {
     dynamicContent.innerText="Thank you for your response!";
   }
