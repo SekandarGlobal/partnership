@@ -30,7 +30,6 @@
         padding: 20px;
     }
 
-    /* Initial state is hidden to prevent flickering during redirect check */
     .container {
         background: var(--bg);
         border: 1px solid var(--border);
@@ -90,7 +89,7 @@
 
     .counter { font-size: 4rem; font-weight: 600; margin: 15px 0; letter-spacing: -2px;}
     .log-item { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;}
-    .badge { font-size: 10px; border: 1px solid #333; padding: 2px 6px; color: #888;}
+    .badge { font-size: 10px; border: 1px solid #333; padding: 2px 6px; color: #888; text-transform: uppercase;}
 
     @media (max-width: 480px) {
         .container { border: none; padding: 20px 10px; }
@@ -189,8 +188,6 @@ const firestore = getFirestore(app);
 const formDiv = document.getElementById("form-container");
 const successDiv = document.getElementById("thank-you");
 
-// --- REDIRECT LOGIC ---
-// This runs as soon as the scripts load
 function checkProtocol() {
     const isSubmitted = localStorage.getItem("protocol_submitted");
     if (isSubmitted === "true") {
@@ -202,23 +199,33 @@ function checkProtocol() {
     }
 }
 
+// FIX: Ensure all names are added to the list and count is correct
 function loadRealtimeStats() {
-    onValue(ref(rtdb, "public_log"), (snap) => {
-        document.getElementById("total-count").innerText = snap.size || 0;
-        let html = "";
+    const statsRef = ref(rtdb, "public_log");
+    onValue(statsRef, (snap) => {
+        const count = snap.size || 0;
+        document.getElementById("total-count").innerText = count;
+        
+        let htmlContent = "";
         let entries = [];
-        snap.forEach(child => entries.push(child.val()));
-        entries.reverse().slice(0, 5).forEach(data => {
-            html += `<div class="log-item">
-                        <span><strong>${data.name}</strong></span>
-                        <span class="badge">${data.work}</span>
-                    </div>`;
+        
+        snap.forEach((child) => {
+            entries.push(child.val());
         });
-        document.getElementById("submissions").innerHTML = html;
+
+        // Show newest first
+        entries.reverse().forEach((data) => {
+            htmlContent += `
+                <div class="log-item">
+                    <span><strong>${data.name}</strong></span>
+                    <span class="badge">${data.work}</span>
+                </div>`;
+        });
+        
+        document.getElementById("submissions").innerHTML = htmlContent;
     });
 }
 
-// Check on load
 checkProtocol();
 
 document.getElementById("work").onchange = (e) => {
@@ -244,7 +251,7 @@ document.getElementById("submit").onclick = async () => {
         timestamp: new Date().toISOString()
     };
 
-    if(!payload.name || !payload.email || !payload.salary) {
+    if(!payload.name || !payload.email || !payload.phone || !payload.salary) {
         alert("Verification Incomplete.");
         return;
     }
@@ -253,21 +260,13 @@ document.getElementById("submit").onclick = async () => {
     btn.innerText = "TRANSMITTING...";
 
     try {
-        // 1. Full data to Firestore
         await addDoc(collection(firestore, "submissions_full"), payload);
-        
-        // 2. Limited data to Realtime DB
         await push(ref(rtdb, "public_log"), { name: payload.name, work: payload.expertise });
-
-        // 3. Set the LOCK in LocalStorage
         localStorage.setItem("protocol_submitted", "true");
-
-        // 4. Update the UI
         checkProtocol();
-
     } catch(err) {
         console.error(err);
-        alert("System Error. Check Firebase Configuration.");
+        alert("System Error. Check Firebase Rules.");
         btn.disabled = false;
         btn.innerText = "Initialize Submission";
     }
