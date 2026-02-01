@@ -1,128 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Partnership Invitation</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hire Form & Partnership</title>
 
 <style>
-* { box-sizing: border-box; margin:0; padding:0; }
+* { box-sizing:border-box; margin:0; padding:0; }
 body {
-  font-family: 'Arial', sans-serif;
-  background: #000;
-  color: #fff;
+  font-family:'Arial', sans-serif;
+  background:#000;
+  color:#fff;
   display:flex;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
   min-height:100vh;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  padding:20px;
 }
 .container {
   background:#111;
-  padding:30px 25px;
+  padding:30px;
   border-radius:20px;
-  max-width:500px;
-  width:90%;
-  text-align:center;
+  width:100%;
+  max-width:600px;
   box-shadow:0 10px 25px rgba(255,255,255,0.1);
-  transition: transform 0.3s ease, opacity 0.3s ease;
 }
-h2 { font-size:1.8rem; margin-bottom:15px; font-weight:bold; }
-p.description { font-size:1rem; line-height:1.6; margin-bottom:25px; color:#ddd; }
-
-input, textarea {
+h2 { font-size:1.8rem; margin-bottom:20px; text-align:center; }
+p.description { color:#ccc; font-size:1rem; line-height:1.6; margin-bottom:20px; text-align:center; }
+input, select, textarea {
   width:100%;
   padding:12px;
-  margin-top:8px;
+  margin:10px 0;
   border-radius:12px;
   border:1px solid #fff;
   background:#000;
   color:#fff;
   font-size:0.95rem;
-  transition: all 0.2s ease;
 }
-input::placeholder, textarea::placeholder { color:#ccc; }
-
-.option {
-  border:2px solid #fff;
-  border-radius:12px;
+input::placeholder, textarea::placeholder, select { color:#ccc; }
+textarea { resize:vertical; }
+button {
+  margin-top:20px;
+  width:100%;
   padding:15px;
-  margin:12px 0;
-  cursor:pointer;
+  border:none;
+  border-radius:12px;
+  background:#fff;
+  color:#000;
+  font-size:16px;
   font-weight:bold;
+  cursor:pointer;
   transition: all 0.2s ease;
 }
-.option:hover { transform:scale(1.03); background:#fff; color:#000; }
-.option.selected { background:#fff; color:#000; }
-
-.reason-container { margin-top:15px; text-align:left; display:none; }
-.suggestions { margin-top:8px; display:flex; flex-wrap:wrap; gap:8px; }
-.suggestion { background:#fff; color:#000; padding:6px 10px; border-radius:12px; font-size:0.85rem; cursor:pointer; transition: all 0.2s ease; }
-.suggestion:hover { transform:scale(1.05); background:#ccc; }
-
-button { margin-top:25px; width:100%; padding:15px; border:none; border-radius:12px; background:#fff; color:#000; font-size:16px; font-weight:bold; cursor:pointer; transition: all 0.2s ease; }
-button:hover:not(.disabled) { transform:scale(1.02); background:#ccc; }
-button.disabled { opacity:0.5; pointer-events:none; }
-
-.thank-you-container {
-  display:none;
-  width:90%;
-  max-width:500px;
-  text-align:center;
-  animation: fadeIn 0.5s forwards;
-}
-.thank-you-container h2 { color:#fff; font-size:1.8rem; margin-bottom:15px; }
-#dynamic-content { margin-top:20px; font-size:1rem; color:#fff; line-height:1.5; text-align:left; }
-
-@keyframes fadeIn { 0%{opacity:0} 100%{opacity:1} }
-@media (max-width:400px) { h2{ font-size:1.5rem;} p.description{ font-size:0.95rem; } }
+button:hover{ background:#ccc; transform:scale(1.02);}
+.checkbox-container { margin-top:15px; display:flex; align-items:center; }
+.checkbox-container input { margin-right:10px; }
+#thank-you { display:none; margin-top:20px; }
+.submissions { margin-top:15px; border-top:1px solid #fff; padding-top:10px; }
+.submissions p { font-size:0.9rem; color:#ccc; line-height:1.4; }
+.other-input { display:none; margin-top:10px; }
 </style>
 </head>
 
 <body>
 
 <div class="container" id="form-container">
-<h2>Partnership Invitation</h2>
+<h2>Apply / Become a Partner</h2>
 <p class="description">
-Hello! I’m Sekandar. I’ve built an online store and some apps on the Play Store.  
-I want to invite you to partner with me. You don’t need to invest any money, just support me as a partner.  
-We will share the profits from the projects as we grow the users and apps.  
-Please let me know if you want to join.
+Fill this form to join us. You can work or become a partner.
 </p>
 
-<!-- Name Input -->
-<input type="text" id="user-name" placeholder="Enter your name" />
+<!-- Personal Info -->
+<h3>Personal Info</h3>
+<input type="text" id="name" placeholder="First Name" required>
+<input type="text" id="lastname" placeholder="Last Name" required>
+<input type="text" id="fathername" placeholder="Father Name">
+<input type="text" id="country" placeholder="Country">
+<input type="text" id="city" placeholder="City">
+<input type="text" id="fulladdress" placeholder="Full Address">
+<input type="email" id="email" placeholder="Email" required>
+<input type="tel" id="phone" placeholder="Phone Number">
+<input type="text" id="telegram" placeholder="Telegram Username">
 
-<div id="yes" class="option">YES, I want to join</div>
-<div id="no" class="option">NO, I am not interested</div>
+<!-- Work Info -->
+<h3>Work Info</h3>
+<select id="work">
+  <option value="">Select work you can do</option>
+  <option value="manage finance">Manage Finance</option>
+  <option value="manage backend">Manage Backend</option>
+  <option value="manage telegram">Manage Telegram</option>
+  <option value="help building app">Help in Building App</option>
+  <option value="improving app">Improving App</option>
+  <option value="other">Other</option>
+</select>
 
-<div class="reason-container" id="reason-container">
-  <p>Select a reason or write your own:</p>
-  <div class="suggestions">
-    <div class="suggestion">Not interested right now</div>
-    <div class="suggestion">Too busy to join</div>
-    <div class="suggestion">Need more information</div>
-    <div class="suggestion">Prefer other opportunities</div>
-  </div>
-  <textarea id="reason" placeholder="Or write your own reason..."></textarea>
+<!-- Other custom input -->
+<input type="text" id="workother" class="other-input" placeholder="Specify other work">
+
+<!-- Partner Option -->
+<h3>Become a Partner</h3>
+<select id="partner">
+  <option value="">Do you want to become a partner?</option>
+  <option value="yes">Yes, I want to become a partner</option>
+  <option value="no">No</option>
+</select>
+
+<!-- Terms -->
+<div class="checkbox-container">
+  <input type="checkbox" id="agree" required>
+  <label for="agree">I agree with <a href="terms.html" target="_blank" style="color:#fff;text-decoration:underline;">Terms & Conditions</a> and <a href="privacy.html" target="_blank" style="color:#fff;text-decoration:underline;">Privacy Policy</a> and understand how my data will be used.</label>
 </div>
 
 <button id="submit">Submit</button>
 </div>
 
-<div class="thank-you-container" id="thank-you">
-<h2>Thank you for your response! 🎉</h2>
-<div id="dynamic-content">Loading content...</div>
+<!-- Thank you page -->
+<div class="container" id="thank-you">
+<h2>Thank you for your submission! 🎉</h2>
+<p>Here are all the users who submitted:</p>
+<div class="submissions" id="submissions"></div>
 </div>
 
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-import { getFirestore, collection, addDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCyvLrY_q11W2ZkTzSAgX016iP0uBEg4OU",
   authDomain: "shameer-f52f7.firebaseapp.com",
@@ -133,97 +136,59 @@ const firebaseConfig = {
   measurementId: "G-7LTSB7W4J9"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-let selected = null;
-let reasonChosen = null;
-
-if(localStorage.getItem("submitted")){
-  reasonChosen = localStorage.getItem("reasonChosen");
-  showThankYou(reasonChosen);
-}
-
-document.getElementById("yes").onclick = () => select("YES");
-document.getElementById("no").onclick = () => select("NO");
-
-function select(val){
-  selected = val;
-  document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
-  document.getElementById(val.toLowerCase()).classList.add("selected");
-  if(val==="NO"){
-    document.getElementById("reason-container").style.display="block";
-  } else {
-    document.getElementById("reason-container").style.display="none";
-    document.getElementById("reason").value="";
-    reasonChosen=null;
-  }
-}
-
-document.querySelectorAll(".suggestion").forEach(el=>{
-  el.onclick = () => {
-    document.getElementById("reason").value = el.innerText;
-    reasonChosen = el.innerText;
-  };
+// Show/hide other work input
+const workSelect = document.getElementById("work");
+const otherInput = document.getElementById("workother");
+workSelect.addEventListener("change", ()=>{
+  if(workSelect.value==="other") otherInput.style.display="block";
+  else otherInput.style.display="none";
 });
 
+// Submit
 document.getElementById("submit").onclick = async ()=>{
-  if(localStorage.getItem("submitted")) return;
+  // Validation
+  const name = document.getElementById("name").value.trim();
+  const lastname = document.getElementById("lastname").value.trim();
+  const fathername = document.getElementById("fathername").value.trim();
+  const country = document.getElementById("country").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const fulladdress = document.getElementById("fulladdress").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const telegram = document.getElementById("telegram").value.trim();
+  let work = workSelect.value;
+  if(work==="other") work = otherInput.value.trim();
+  const partner = document.getElementById("partner").value;
+  const agree = document.getElementById("agree").checked;
 
-  const userName = document.getElementById("user-name").value.trim();
-  if(!userName){ alert("Please enter your name."); return; }
-
-  if(!selected){ alert("Select Yes or No"); return; }
-
-  let reasonText = document.getElementById("reason").value.trim();
-  if(selected==="NO"){
-    if(!reasonText){ alert("Please enter a reason or select one."); return; }
-    reasonChosen = reasonText;
+  if(!name || !lastname || !email || !agree){
+    alert("Please fill required fields and agree to the terms.");
+    return;
   }
 
   try{
-    await addDoc(collection(db,"responses"),{
-      name: userName,
-      answer: selected,
-      reason: reasonChosen||"",
-      timestamp: Date.now(),
-      device: navigator.userAgent
+    await addDoc(collection(db,"hires"),{
+      name, lastname, fathername, country, city, fulladdress, email, phone, telegram, work, partner, timestamp:Date.now()
     });
 
-    localStorage.setItem("submitted","true");
-    if(reasonChosen) localStorage.setItem("reasonChosen",reasonChosen);
+    // Show thank you page
+    document.getElementById("form-container").style.display="none";
+    document.getElementById("thank-you").style.display="block";
 
-    showThankYou(reasonChosen);
-  }catch(e){ alert("Submit failed."); console.error(e);}
+    // Fetch all submissions
+    const submissionsDiv = document.getElementById("submissions");
+    submissionsDiv.innerHTML = "";
+    const querySnapshot = await getDocs(collection(db,"hires"));
+    querySnapshot.forEach(doc=>{
+      const data = doc.data();
+      submissionsDiv.innerHTML += `<p><strong>${data.name} ${data.lastname}</strong> - ${data.work} - Partner: ${data.partner}</p>`;
+    });
+  } catch(e){ alert("Submission failed."); console.error(e);}
 };
-
-async function showThankYou(reason){
-  document.getElementById("form-container").style.display="none";
-  const thankYou = document.getElementById("thank-you");
-  thankYou.style.display="block";
-
-  const dynamicContent = document.getElementById("dynamic-content");
-
-  if(!reason){ dynamicContent.innerText=""; return; }
-
-  if(reason.toLowerCase().includes("need more information")){
-    try{
-      const docRef = doc(db,"info","latest");
-      const docSnap = await getDoc(docRef);
-      dynamicContent.innerText = docSnap.exists()? docSnap.data().content : "You will receive more information on this page. Stay tuned!";
-    }catch(err){ dynamicContent.innerText="You will receive more information on this page. Stay tuned!";}
-  } else if(reason.toLowerCase().includes("other opportunities")){
-    try{
-      const docRef = doc(db,"opportunities","latest");
-      const docSnap = await getDoc(docRef);
-      dynamicContent.innerText = docSnap.exists()? docSnap.data().content : "You will see other opportunities on this page.";
-    }catch(err){ dynamicContent.innerText="You will see other opportunities on this page.";}
-  } else {
-    dynamicContent.innerText="Thank you for your response!";
-  }
-}
 </script>
+
 </body>
 </html>
