@@ -35,52 +35,47 @@
         background: var(--bg);
         border: 1px solid var(--border);
         width: 100%;
-        max-width: 500px; /* Slimmer for a modern, centered aesthetic */
-        padding: 40px 30px;
+        max-width: 500px;
+        padding: 50px 30px;
         text-align: center; 
-        animation: fadeIn 1s cubic-bezier(0.19, 1, 0.22, 1);
+        animation: fadeIn 0.8s ease-out;
     }
 
-    @keyframes fadeIn { 
-        from { opacity: 0; transform: translateY(20px); } 
-        to { opacity: 1; transform: translateY(0); } 
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     header { margin-bottom: 40px; }
-    h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -1px; margin-bottom: 12px; }
-    .subtitle { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; }
+    h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 10px; text-transform: uppercase; }
+    .subtitle { color: var(--text-muted); font-size: 0.8rem; line-height: 1.6; }
 
     .section-title {
-        margin: 35px 0 20px 0;
-        padding-bottom: 10px;
+        margin: 30px 0 15px 0;
+        padding-bottom: 8px;
         border-bottom: 1px solid var(--border);
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 2px;
         color: var(--text-muted);
     }
 
-    /* CENTERED INPUT GROUPS */
     .input-group {
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centers the label and input internally */
-        margin-bottom: 20px;
+        align-items: center;
+        margin-bottom: 15px;
         width: 100%;
     }
     
     label {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         text-transform: uppercase;
         color: var(--text-muted);
         font-weight: 600;
         letter-spacing: 1px;
-        margin-bottom: 8px;
-        text-align: center;
+        margin-bottom: 6px;
     }
 
     input, select {
-        width: 100%; /* Spans full width of the container */
+        width: 100%;
         background: var(--surface);
         border: 1px solid var(--border);
         color: var(--text-main);
@@ -88,55 +83,32 @@
         font-size: 0.9rem;
         font-family: 'Inter', sans-serif;
         border-radius: 0;
-        text-align: center; /* Centers text inside the input */
-        transition: all 0.3s ease;
+        text-align: center;
+        transition: 0.3s;
     }
 
-    /* Fix for select text centering in some browsers */
-    select { text-align-last: center; padding-right: 30px; }
+    input:focus, select:focus { border-color: var(--focus); background: #111; }
 
-    input:focus, select:focus { 
-        border-color: var(--focus); 
-        background: #111; 
-    }
-
-    /* Custom Selection Styling */
-    .select-wrapper { width: 100%; position: relative; }
+    select { text-align-last: center; appearance: none; cursor: pointer; }
 
     .terms-box {
         background: var(--surface);
         border: 1px solid var(--border);
         padding: 20px;
-        margin-top: 30px;
+        margin-top: 25px;
         font-size: 0.7rem;
         color: var(--text-muted);
-        line-height: 1.6;
-        text-align: center;
-    }
-
-    .checkbox-container {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
-
-    input[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-        text-align: center;
+        line-height: 1.5;
     }
 
     button {
         width: 100%;
         margin-top: 30px;
-        padding: 16px;
+        padding: 18px;
         background: var(--text-main);
         color: var(--bg);
         border: 1px solid var(--text-main);
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -144,35 +116,18 @@
         transition: 0.3s;
     }
 
-    button:hover { 
-        background: transparent; 
-        color: var(--text-main); 
-    }
+    button:hover { background: transparent; color: var(--text-main); }
 
-    /* Results Center */
-    #thank-you { display: none; text-align: center; animation: fadeIn 1s forwards; }
+    /* Success State */
+    #thank-you { display: none; text-align: center; }
     .stats-counter { font-size: 4rem; font-weight: 600; margin: 10px 0; }
-    .submission-list { margin-top: 40px; }
     .submission-item { 
-        padding: 12px 0; 
+        padding: 10px 0; 
         border-bottom: 1px solid var(--border); 
-        display: flex; 
-        flex-direction: column; /* Stacked for mobile */
-        gap: 5px;
-        font-size: 0.8rem; 
-    }
-    .badge { 
-        align-self: center;
-        font-size: 0.6rem; 
-        padding: 2px 10px; 
-        border: 1px solid var(--border); 
-        text-transform: uppercase; 
-    }
-
-    /* Mobile Fine-tuning */
-    @media(max-width: 480px) {
-        .container { padding: 30px 20px; border: none; }
-        h1 { font-size: 1.4rem; }
+        font-size: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 </style>
 </head>
@@ -180,63 +135,32 @@
 
 <div class="container" id="form-container">
     <header>
-        <h1>Strategic Application</h1>
-        <p class="subtitle">Join our network of elite contributors. Please complete the verification protocol below.</p>
+        <h1>Protocol Entry</h1>
+        <p class="subtitle">Complete the verification to join the infrastructure.</p>
     </header>
 
-    <div class="section-title">Identity</div>
-    
-    <div class="input-group">
-        <label>First Name</label>
-        <input type="text" id="name" required>
-    </div>
-    <div class="input-group">
-        <label>Last Name</label>
-        <input type="text" id="lastname" required>
-    </div>
-    <div class="input-group">
-        <label>Father's Name</label>
-        <input type="text" id="fathername">
-    </div>
-    <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" id="email" required>
-    </div>
-    <div class="input-group">
-        <label>Phone Number</label>
-        <input type="tel" id="phone">
-    </div>
-    <div class="input-group">
-        <label>Telegram Handle</label>
-        <input type="text" id="telegram" placeholder="@username">
-    </div>
+    <div class="section-title">Personal Info</div>
+    <div class="input-group"><label>First Name</label><input type="text" id="name" required></div>
+    <div class="input-group"><label>Last Name</label><input type="text" id="lastname" required></div>
+    <div class="input-group"><label>Father Name</label><input type="text" id="fathername"></div>
+    <div class="input-group"><label>Email</label><input type="email" id="email" required></div>
+    <div class="input-group"><label>Phone Number</label><input type="tel" id="phone"></div>
+    <div class="input-group"><label>Telegram Username</label><input type="text" id="telegram" placeholder="@username"></div>
 
     <div class="section-title">Location</div>
-    
-    <div class="input-group">
-        <label>Country</label>
-        <input type="text" id="country">
-    </div>
-    <div class="input-group">
-        <label>City</label>
-        <input type="text" id="city">
-    </div>
-    <div class="input-group">
-        <label>Full Address</label>
-        <input type="text" id="fulladdress">
-    </div>
+    <div class="input-group"><label>Country</label><input type="text" id="country"></div>
+    <div class="input-group"><label>City</label><input type="text" id="city"></div>
+    <div class="input-group"><label>Full Address</label><input type="text" id="fulladdress"></div>
 
-    <div class="section-title">Specifications</div>
-
+    <div class="section-title">Preferences</div>
     <div class="input-group">
         <label>Area of Expertise</label>
         <select id="work">
             <option value="" disabled selected>Select competency</option>
-            <option value="Finance Strategy">Financial Strategy</option>
+            <option value="Finance Strategy">Finance Strategy</option>
             <option value="Backend Architecture">Backend Architecture</option>
             <option value="Community Management">Community Management</option>
             <option value="App Development">App Development</option>
-            <option value="App Optimization">App Optimization</option>
             <option value="other">Other / Specialized</option>
         </select>
     </div>
@@ -247,47 +171,37 @@
     </div>
 
     <div class="input-group">
-        <label>Salary Preference</label>
+        <label>Salary Selection</label>
         <select id="salary">
-            <option value="" disabled selected>Select preference</option>
-            <option value="No Salary">I don't want salary</option>
-            <option value="50 USD">50$ / Day</option>
-            <option value="100 USD">100$ / Day</option>
-            <option value="130 USD">130$ / Day</option>
+            <option value="" disabled selected>Choose Preference</option>
+            <option value="None">I don't want salary</option>
+            <option value="50 USD">I want 50$/day</option>
+            <option value="100 USD">I want 100/day</option>
+            <option value="130 USD">I want 130$day</option>
         </select>
     </div>
 
     <div class="input-group">
-        <label>Partnership Interest</label>
+        <label>Partnership</label>
         <select id="partner">
-            <option value="" disabled selected>Seeking partnership?</option>
-            <option value="yes">Initiate Partnership</option>
-            <option value="no">Employment Only</option>
+            <option value="" disabled selected>Seek partnership?</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
         </select>
     </div>
 
     <div class="terms-box">
-        <strong>LEGAL DISCLOSURE:</strong> Private data is transmitted to a private Firestore vault. Minimal data (Name/Role) is synchronized to the Realtime database for verification purposes.
+        <strong>LEGAL DISCLOSURE:</strong> All data provided including address, salary choice, and contact identifiers are transmitted to a private encrypted Firestore database.
     </div>
 
-    <div class="checkbox-container">
-        <input type="checkbox" id="agree">
-        <label for="agree" style="margin:0; cursor:pointer;">I accept the protocol.</label>
-    </div>
-
-    <button id="submit">Confirm Submission</button>
+    <button id="submit">Submit Entry</button>
 </div>
 
 <div class="container" id="thank-you">
-    <header>
-        <h1>Success</h1>
-        <p class="subtitle">Your application has been logged in the secure database.</p>
-    </header>
-    
+    <h1>Acknowledged</h1>
     <div class="stats-counter" id="total-count">0</div>
-    <p style="text-transform:uppercase; letter-spacing:2px; font-size:0.6rem; color:var(--text-muted);">Verified Applicants</p>
-    
-    <div class="submission-list" id="submissions"></div>
+    <p style="text-transform:uppercase; letter-spacing:2px; font-size:0.6rem; color:var(--text-muted);">Verified Submissions</p>
+    <div id="submissions" style="margin-top:30px; text-align: left;"></div>
 </div>
 
 <script type="module">
@@ -315,48 +229,55 @@ document.getElementById("work").onchange = (e) => {
 
 document.getElementById("submit").onclick = async () => {
     const btn = document.getElementById("submit");
-    const data = {
-        name: document.getElementById("name").value.trim(),
-        lastname: document.getElementById("lastname").value.trim(),
+    
+    // Capturing EVERY single field as requested
+    const payload = {
+        firstName: document.getElementById("name").value.trim(),
+        lastName: document.getElementById("lastname").value.trim(),
+        fatherName: document.getElementById("fathername").value.trim(),
         email: document.getElementById("email").value.trim(),
-        salary: document.getElementById("salary").value,
-        work: document.getElementById("work").value === "other" ? document.getElementById("workother").value : document.getElementById("work").value,
-        partner: document.getElementById("partner").value,
-        agree: document.getElementById("agree").checked
+        phone: document.getElementById("phone").value.trim(),
+        telegram: document.getElementById("telegram").value.trim(),
+        country: document.getElementById("country").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        fullAddress: document.getElementById("fulladdress").value.trim(),
+        salaryPreference: document.getElementById("salary").value,
+        expertise: document.getElementById("work").value === "other" ? document.getElementById("workother").value : document.getElementById("work").value,
+        partnership: document.getElementById("partner").value,
+        submittedAt: new Date().toISOString()
     };
 
-    if(!data.name || !data.email || !data.salary || !data.agree) {
+    if(!payload.firstName || !payload.email || !payload.salaryPreference) {
         alert("Please complete required fields.");
         return;
     }
 
-    btn.innerText = "Processing...";
+    btn.innerText = "Transmitting...";
     btn.disabled = true;
 
     try {
-        await addDoc(collection(firestore, "applicants_secure"), {...data, timestamp: Date.now()});
-        await push(ref(rtdb, "public_submissions"), { name: data.name, work: data.work, partner: data.partner });
+        // 1. Send COMPLETE data to Firestore (Sensitive)
+        await addDoc(collection(firestore, "submissions_full"), payload);
+        
+        // 2. Send LIGHT data to RTDB (Public counter)
+        await push(ref(rtdb, "public_log"), { name: payload.firstName, work: payload.expertise });
 
         document.getElementById("form-container").style.display = "none";
         document.getElementById("thank-you").style.display = "block";
 
-        onValue(ref(rtdb, "public_submissions"), (snap) => {
+        onValue(ref(rtdb, "public_log"), (snap) => {
             document.getElementById("total-count").innerText = snap.size;
             let html = "";
-            let items = [];
-            snap.forEach(child => { items.push(child.val()); });
-            items.reverse().slice(0, 5).forEach(val => {
-                html += `<div class="submission-item">
-                            <span><strong>${val.name}</strong></span>
-                            <span>${val.work}</span>
-                            <span class="badge">${val.partner === 'yes' ? 'Partner' : 'Staff'}</span>
-                         </div>`;
+            let list = [];
+            snap.forEach(c => { list.push(c.val()); });
+            list.reverse().slice(0, 5).forEach(v => {
+                html += `<div class="submission-item"><span>${v.name}</span> <span style="color:#888">${v.work}</span></div>`;
             });
             document.getElementById("submissions").innerHTML = html;
         });
-    } catch(e) { 
-        alert("Transmission error."); 
-        btn.innerText = "Confirm Submission";
+    } catch(e) {
+        alert("Submission failed.");
+        btn.innerText = "Submit Entry";
         btn.disabled = false;
     }
 };
